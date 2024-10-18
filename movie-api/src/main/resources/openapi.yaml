@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  description:
+    Movie Finder Service.
+  version: 1.0.0
+  title: Movie Finder API
+  contact:
+    name: 
+      Movie Finder Co.
+
+servers:
+  - url: http://localhost:8080/movies
+    description: Local environment (mainly for development)
+
+paths:
+  "/":
+    get:
+      description: Get the API root
+      responses:
+        200:
+          description: default empty response
+          content:
+            application/json:
+              schema:
+                type: string
