@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 
-@SpringBootApplication(scanBasePackages = {"hu.exercise.movie", "com.omdbapi.openapi.client"})
+@SpringBootApplication(scanBasePackages = {"hu.exercise.movie", "com.omdbapi.openapi.client", "org.themoviedb.openapi.client"})
 //@EnableJpaRepositories
 //@EnableTransactionManagement
 //@ComponentScan

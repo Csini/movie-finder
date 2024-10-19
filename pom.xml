@@ -13,6 +13,7 @@
 		<module>movie-api</module>
 		<module>movie-business</module>
 		<module>omdb-api-client</module>
+		<module>tmdb-api-client</module>
 	</modules>
 
 	<parent>
