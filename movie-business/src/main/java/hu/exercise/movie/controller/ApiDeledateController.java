@@ -1,5 +1,6 @@
 package hu.exercise.movie.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import org.themoviedb.openapi.client.model.SearchMovie200Response;
 import org.themoviedb.openapi.client.model.SearchMovie200ResponseResultsInner;
 
 import com.omdbapi.openapi.client.api.SearchParameterApi;
+import com.omdbapi.openapi.client.model.SearchResponse;
 import com.omdbapi.openapi.client.model.TitleSearch200Response;
 
 import hu.exercise.movie.entity.CallSearchMovie;
@@ -28,25 +30,17 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ApiDeledateController implements ApiApiDelegate {
 
+	@Autowired
 	private ModelMapper beanMapper;
 
+	@Autowired
 	private CallSearchMovieService callSearchMovieService;
 
+	@Autowired
 	private SearchParameterApi searchParameterApi;
 
+	@Autowired
 	private DefaultApi defaultApi;
-
-	public ApiDeledateController(@Autowired ModelMapper beanMapper,
-			@Autowired CallSearchMovieService callSearchMovieService, @Autowired SearchParameterApi searchParameterApi,
-			@Autowired DefaultApi defaultApi) {
-		super();
-		this.beanMapper = beanMapper;
-		this.callSearchMovieService = callSearchMovieService;
-
-		this.searchParameterApi = searchParameterApi;
-
-		this.defaultApi = defaultApi;
-	}
 
 	public void setBeanMapper(ModelMapper beanMapper) {
 		this.beanMapper = beanMapper;
@@ -57,12 +51,29 @@ public class ApiDeledateController implements ApiApiDelegate {
 
 		callSearchMovieService.save(CallSearchMovie.omdb().movieTitle(movieTitle).build());
 
-		// TODO call MovieService
+		// call MovieService
 		TitleSearch200Response titleSearch = searchParameterApi.titleSearch(movieTitle, null, null, null, null, null);
 
-//		titleSearch.
+		MovieResponse response = handleTitleSearch200Response(titleSearch);
 
-		return ApiApiDelegate.super.searchOmdb(movieTitle);
+		return ResponseEntity.ok(response);
+	}
+
+	protected MovieResponse handleTitleSearch200Response(TitleSearch200Response titleSearch) {
+		MovieResponse response = new MovieResponse();
+		try {
+			SearchResponse searchResponse = titleSearch.getSearchResponse();
+			handleSearchResponse(response, searchResponse);
+		} catch (ClassCastException e) {
+			titleSearch.getListSearchResponse()
+					.forEach(searchResponse -> handleSearchResponse(response, searchResponse));
+		}
+		return response;
+	}
+
+	protected void handleSearchResponse(MovieResponse response, SearchResponse searchResponse) {
+		response.addMoviesItem(Movie.builder().title(searchResponse.getTitle()).year(searchResponse.getYear())
+				.director(Arrays.asList(searchResponse.getDirector())).build());
 	}
 
 	@Override
@@ -70,35 +81,34 @@ public class ApiDeledateController implements ApiApiDelegate {
 
 		callSearchMovieService.save(CallSearchMovie.themoviedb().movieTitle(movieTitle).build());
 
-		//extra check from api-key
+		// extra check from api-key
 //		defaultApi.authenticationValidateKey();
 
-		//call MovieService
-		MovieResponse response = new MovieResponse();
+		// call MovieService
+		SearchMovie200Response searchMovieResult = callSearchMovie(movieTitle);
 
-		boolean includeAdult = true;
-		SearchMovie200Response searchMovieResult = defaultApi.searchMovie(movieTitle, includeAdult, null, null, null,
-				null, null);
+		MovieResponse response = handleSearchMovie200Response(searchMovieResult);
+
+		return ResponseEntity.ok(response);
+	}
+
+	protected MovieResponse handleSearchMovie200Response(SearchMovie200Response searchMovieResult) {
+		MovieResponse response = new MovieResponse();
 
 		searchMovieResult.getResults().stream().map((SearchMovie200ResponseResultsInner result) -> {
 
-			Movie moviesItem = new Movie();
-			
-			MovieDetails200Response movieDetails = defaultApi.movieDetails(result.getId(), null, null);
+			MovieDetails200Response movieDetails = callMovieDetails(result.getId());
 
 			// year
 			String releaseDate = movieDetails.getReleaseDate();
-
-			moviesItem.setTitle(movieDetails.getTitle());
 
 			// format to year
 			// "release_date": "1999-10-15",
 			if (!StringUtils.isEmpty(releaseDate) && releaseDate.length() >= 4) {
 				releaseDate = releaseDate.substring(0, 4);
 			}
-			moviesItem.setYear(releaseDate);
 
-			MovieCredits200Response movieCredits = defaultApi.movieCredits(result.getId(), null);
+			MovieCredits200Response movieCredits = callMovieCredits(result.getId());
 
 //			 {
 //			      "adult": false,
@@ -128,15 +138,25 @@ public class ApiDeledateController implements ApiApiDelegate {
 //			    },
 
 			// directors
-			List<String> directors = movieCredits.getCrew().stream()
-					.filter(crew -> "Director".equals(crew.getJob())).map(crew -> crew.getName())
-					.collect(Collectors.toList());
-			moviesItem.setDirector(directors);
+			List<String> directors = movieCredits.getCrew().stream().filter(crew -> "Director".equals(crew.getJob()))
+					.map(crew -> crew.getName()).collect(Collectors.toList());
 
-			return moviesItem;
+			return Movie.builder().title(movieDetails.getTitle()).year(releaseDate).director(directors).build();
 		}).forEach(moviesItem -> response.addMoviesItem(moviesItem));
+		return response;
+	}
 
-//		return ApiApiDelegate.super.searchTheMoviedb(movieTitle);
-		return ResponseEntity.ok(response);
+	protected SearchMovie200Response callSearchMovie(String movieTitle) {
+
+		boolean includeAdult = true;
+		return defaultApi.searchMovie(movieTitle, includeAdult, null, null, null, null, null);
+	}
+
+	protected MovieCredits200Response callMovieCredits(int id) {
+		return defaultApi.movieCredits(id, null);
+	}
+
+	protected MovieDetails200Response callMovieDetails(int id) {
+		return defaultApi.movieDetails(id, null, null);
 	}
 }

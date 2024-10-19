@@ -12,28 +12,17 @@
 
 package com.omdbapi.openapi.client.model;
 
-import java.util.Objects;
-import java.util.Arrays;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.omdbapi.openapi.client.model.SearchResponse;
-import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.List;
 import java.io.Serializable;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import jakarta.validation.constraints.*;
-import jakarta.validation.Valid;
-import org.hibernate.validator.constraints.*;
 
 /**
  * TitleSearch200Response
  */
 @JsonTypeName("titleSearch_200_response")
-public class TitleSearch200Response implements Serializable {
+public class TitleSearch200Response extends ArrayList<SearchResponse> implements Serializable {
 	/**
 	 * Get the actual instance of `SearchResponse`. If the actual instance is not
 	 * `SearchResponse`, the ClassCastException will be thrown.

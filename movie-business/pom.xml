@@ -227,6 +227,7 @@
 								<!-- <interfaceOnly>true</interfaceOnly> -->
 								<useBeanValidation>true</useBeanValidation>
 								<performBeanValidation>true</performBeanValidation>
+								<generateBuilders>true</generateBuilders>
 								<!-- <sourceFolder>/src/main/java</sourceFolder> -->
 								<!-- <implFolder>/src/main/java</implFolder> -->
 								<serializableModel>true</serializableModel>
