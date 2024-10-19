@@ -51,7 +51,7 @@ public class CallSearchMovie implements Serializable {
 	}
 	
 	public static CallSearchMovieBuilder themoviedb() {
-		return builder().apiName(SearchMovieApiName.THEMOVIEDB);
+		return builder().apiName(SearchMovieApiName.TMDB);
 	}
 
 	public int hashCode() {

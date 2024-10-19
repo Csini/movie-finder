@@ -30,8 +30,9 @@
             <AppenderRef ref="RollingFile" />
         </Root>
 
-        <!-- LOG "hu.spring.feladat*" at DEBUG level -->
-        <Logger name="hu.spring.feladat" level="debug"></Logger>
+        <!-- LOG "hu.exercise*" at DEBUG level -->
+        <Logger name="hu.exercise" level="debug"></Logger>
+        
     </Loggers>
 
 </Configuration>

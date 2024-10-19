@@ -42,7 +42,7 @@ paths:
           $ref: '#/components/responses/BadRequestError'
         500:
           $ref: '#/components/responses/InternalServerError'
-  /api/themoviedb:
+  /api/tmdb:
     get:
       summary: Search for a Movie at themoviedb.
       tags: 

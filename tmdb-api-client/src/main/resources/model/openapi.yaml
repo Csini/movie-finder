@@ -1,0 +1,528 @@
+openapi: 3.1.0
+info:
+  title: TMDB API
+  version: '3'
+servers:
+  - url: https://api.themoviedb.org
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: bearer
+security:
+  - sec0: []
+paths:
+  /3/search/movie:
+    get:
+      summary: Movie
+      description: Search for movies by their original, translated and alternative titles.
+      operationId: search-movie
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: include_adult
+          in: query
+          schema:
+            type: boolean
+            default: false
+        - name: language
+          in: query
+          schema:
+            type: string
+            default: en-US
+        - name: primary_release_year
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 1
+        - name: region
+          in: query
+          schema:
+            type: string
+        - name: year
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        adult:
+                          type: boolean
+                          example: false
+                          default: true
+                        backdrop_path:
+                          type: string
+                          example: /hZkgoQYus5vegHoetLkCJzb17zJ.jpg
+                        genre_ids:
+                          type: array
+                          items:
+                            type: integer
+                            example: 18
+                            default: 0
+                        id:
+                          type: integer
+                          example: 550
+                          default: 0
+                        original_language:
+                          type: string
+                          example: en
+                        original_title:
+                          type: string
+                          example: Fight Club
+                        overview:
+                          type: string
+                          example: >-
+                            A ticking-time-bomb insomniac and a slippery soap
+                            salesman channel primal male aggression into a
+                            shocking new form of therapy. Their concept catches
+                            on, with underground "fight clubs" forming in every
+                            town, until an eccentric gets in the way and ignites
+                            an out-of-control spiral toward oblivion.
+                        popularity:
+                          type: number
+                          example: 73.433
+                          default: 0
+                        poster_path:
+                          type: string
+                          example: /pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
+                        release_date:
+                          type: string
+                          example: '1999-10-15'
+                        title:
+                          type: string
+                          example: Fight Club
+                        video:
+                          type: boolean
+                          example: false
+                          default: true
+                        vote_average:
+                          type: number
+                          example: 8.433
+                          default: 0
+                        vote_count:
+                          type: integer
+                          example: 26279
+                          default: 0
+                  total_pages:
+                    type: integer
+                    example: 2
+                    default: 0
+                  total_results:
+                    type: integer
+                    example: 39
+                    default: 0
+      deprecated: false
+  /3/movie/{movie_id}:
+    get:
+      summary: Details
+      description: Get the top level details of a movie by ID.
+      operationId: movie-details
+      parameters:
+        - name: movie_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: append_to_response
+          in: query
+          description: >-
+            comma separated list of endpoints within this namespace, 20 items
+            max
+          schema:
+            type: string
+        - name: language
+          in: query
+          schema:
+            type: string
+            default: en-US
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  adult:
+                    type: boolean
+                    example: false
+                    default: true
+                  backdrop_path:
+                    type: string
+                    example: /hZkgoQYus5vegHoetLkCJzb17zJ.jpg
+                  belongs_to_collection: {}
+                  budget:
+                    type: integer
+                    example: 63000000
+                    default: 0
+                  genres:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 18
+                          default: 0
+                        name:
+                          type: string
+                          example: Drama
+                  homepage:
+                    type: string
+                    example: http://www.foxmovies.com/movies/fight-club
+                  id:
+                    type: integer
+                    example: 550
+                    default: 0
+                  imdb_id:
+                    type: string
+                    example: tt0137523
+                  original_language:
+                    type: string
+                    example: en
+                  original_title:
+                    type: string
+                    example: Fight Club
+                  overview:
+                    type: string
+                    example: >-
+                      A ticking-time-bomb insomniac and a slippery soap salesman
+                      channel primal male aggression into a shocking new form of
+                      therapy. Their concept catches on, with underground "fight
+                      clubs" forming in every town, until an eccentric gets in
+                      the way and ignites an out-of-control spiral toward
+                      oblivion.
+                  popularity:
+                    type: number
+                    example: 61.416
+                    default: 0
+                  poster_path:
+                    type: string
+                    example: /pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
+                  production_companies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 508
+                          default: 0
+                        logo_path:
+                          type: string
+                          example: /7cxRWzi4LsVm4Utfpr1hfARNurT.png
+                        name:
+                          type: string
+                          example: Regency Enterprises
+                        origin_country:
+                          type: string
+                          example: US
+                  production_countries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        iso_3166_1:
+                          type: string
+                          example: US
+                        name:
+                          type: string
+                          example: United States of America
+                  release_date:
+                    type: string
+                    example: '1999-10-15'
+                  revenue:
+                    type: integer
+                    example: 100853753
+                    default: 0
+                  runtime:
+                    type: integer
+                    example: 139
+                    default: 0
+                  spoken_languages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        english_name:
+                          type: string
+                          example: English
+                        iso_639_1:
+                          type: string
+                          example: en
+                        name:
+                          type: string
+                          example: English
+                  status:
+                    type: string
+                    example: Released
+                  tagline:
+                    type: string
+                    example: Mischief. Mayhem. Soap.
+                  title:
+                    type: string
+                    example: Fight Club
+                  video:
+                    type: boolean
+                    example: false
+                    default: true
+                  vote_average:
+                    type: number
+                    example: 8.433
+                    default: 0
+                  vote_count:
+                    type: integer
+                    example: 26280
+                    default: 0
+      deprecated: false
+  /3/movie/{movie_id}/credits:
+    get:
+      summary: Credits
+      description: ''
+      operationId: movie-credits
+      parameters:
+        - name: movie_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: language
+          in: query
+          schema:
+            type: string
+            default: en-US
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 550
+                    default: 0
+                  cast:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        adult:
+                          type: boolean
+                          example: false
+                          default: true
+                        gender:
+                          type: integer
+                          example: 2
+                          default: 0
+                        id:
+                          type: integer
+                          example: 819
+                          default: 0
+                        known_for_department:
+                          type: string
+                          example: Acting
+                        name:
+                          type: string
+                          example: Edward Norton
+                        original_name:
+                          type: string
+                          example: Edward Norton
+                        popularity:
+                          type: number
+                          example: 26.99
+                          default: 0
+                        profile_path:
+                          type: string
+                          example: /8nytsqL59SFJTVYVrN72k6qkGgJ.jpg
+                        cast_id:
+                          type: integer
+                          example: 4
+                          default: 0
+                        character:
+                          type: string
+                          example: The Narrator
+                        credit_id:
+                          type: string
+                          example: 52fe4250c3a36847f80149f3
+                        order:
+                          type: integer
+                          example: 0
+                          default: 0
+                  crew:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        adult:
+                          type: boolean
+                          example: false
+                          default: true
+                        gender:
+                          type: integer
+                          example: 2
+                          default: 0
+                        id:
+                          type: integer
+                          example: 376
+                          default: 0
+                        known_for_department:
+                          type: string
+                          example: Production
+                        name:
+                          type: string
+                          example: Arnon Milchan
+                        original_name:
+                          type: string
+                          example: Arnon Milchan
+                        popularity:
+                          type: number
+                          example: 2.931
+                          default: 0
+                        profile_path:
+                          type: string
+                          example: /b2hBExX4NnczNAnLuTBF4kmNhZm.jpg
+                        credit_id:
+                          type: string
+                          example: 55731b8192514111610027d7
+                        department:
+                          type: string
+                          example: Production
+                        job:
+                          type: string
+                          example: Executive Producer
+      deprecated: false
+  /3/authentication:
+    get:
+      summary: Validate Key
+      description: Test your API Key to see if it's valid.
+      operationId: authentication-validate-key
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{"success":true,"status_code":1,"status_message":"Success."}'
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    default: true
+                  status_code:
+                    type: integer
+                    example: 1
+                    default: 0
+                  status_message:
+                    type: string
+                    example: Success.
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: >-
+                    {"status_code":7,"status_message":"Invalid API key: You must
+                    be granted a valid key.","success":false}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 7
+                    default: 0
+                  status_message:
+                    type: string
+                    example: 'Invalid API key: You must be granted a valid key.'
+                  success:
+                    type: boolean
+                    example: false
+                    default: true
+      deprecated: false
+  /3/authentication/token/validate_with_login:
+    post:
+      summary: Create Session (with login)
+      description: >-
+        This method allows an application to validate a request token by
+        entering a username and password.
+      operationId: authentication-create-session-from-login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              Request Example:
+                value:
+                  username: johnny_appleseed
+                  password: test123
+                  request_token: 1531f1a558c8357ce8990cf887ff196e8f5402ec
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: |-
+                    {
+                      "success": true,
+                      "expires_at": "2018-07-24 04:10:26 UTC",
+                      "request_token": "1531f1a558c8357ce8990cf887ff196e8f5402ec"
+                    }
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    default: true
+                  expires_at:
+                    type: string
+                    example: 2018-07-24 04:10:26 UTC
+                  request_token:
+                    type: string
+                    example: 1531f1a558c8357ce8990cf887ff196e8f5402ec
+      deprecated: false
+x-readme:
+  headers: []
+  explorer-enabled: true
+  proxy-enabled: true
+x-readme-fauxas: true
