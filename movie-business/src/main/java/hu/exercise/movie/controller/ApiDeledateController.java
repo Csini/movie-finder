@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.exercise.movie.openapi.api.MovieNameApiDelegate;
+import hu.exercise.movie.openapi.api.ApiApiDelegate;
 import hu.exercise.movie.openapi.model.MovieResponse;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
 @Log4j2
-public class ApiDeledateController implements MovieNameApiDelegate {
+public class ApiDeledateController implements ApiApiDelegate {
 
 	private ModelMapper beanMapper;
 
@@ -25,8 +25,14 @@ public class ApiDeledateController implements MovieNameApiDelegate {
 	}
 
 	@Override
-	public ResponseEntity<MovieResponse> searchByMovieName(String apiName, String movieName) {
+	public ResponseEntity<MovieResponse> searchOmdbByMovieName(String movieName) {
 		// TODO call MovieService
-		return MovieNameApiDelegate.super.searchByMovieName(apiName, movieName);
+		return ApiApiDelegate.super.searchOmdbByMovieName(movieName);
+	}
+	
+	@Override
+	public ResponseEntity<MovieResponse> searchTheMoviedbByMovieName(String movieName) {
+		// TODO call MovieService
+		return ApiApiDelegate.super.searchTheMoviedbByMovieName(movieName);
 	}
 }

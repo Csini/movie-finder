@@ -21,12 +21,4 @@ public class DefaultController {
                 .build();
     }
 
-    @Operation(summary = "Database url", hidden = true)
-    @GetMapping("/database")
-    public ResponseEntity<Void> databaseUrl() {
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create("h2-console"))
-                .build();
-    }
-
 }
