@@ -38,8 +38,7 @@ import org.hibernate.validator.constraints.*;
   SearchResponse.JSON_PROPERTY_DIRECTOR,
   SearchResponse.JSON_PROPERTY_RESPONSE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-19T19:24:39.590534200+02:00[Europe/Budapest]", comments = "Generator version: 7.9.0")
-public class SearchResponse implements Serializable {
+public class SearchResponse extends TitleSearch200Response implements Serializable {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TITLE = "Title";

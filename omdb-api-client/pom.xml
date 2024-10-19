@@ -81,48 +81,8 @@
 							<sources>
 								<source>
 									target/generated-sources/openapi/src/test/java/</source>
-									<source>gen/openapi/src/main/test</source>
+								<source>gen/openapi/src/main/test</source>
 							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.openapitools</groupId>
-				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>7.9.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<!--
-							https://openapi-generator.tech/docs/generators/java -->
-							<inputSpec>
-								${project.basedir}/src/main/resources/model/openapi.yaml
-							</inputSpec>
-							<generatorName>java</generatorName>
-							<library>resttemplate</library>
-							<output>${project.basedir}/gen/openapi/</output>
-
-							<apiPackage>com.omdbapi.openapi.client.api</apiPackage>
-							<modelPackage>com.omdbapi.openapi.client.model</modelPackage>
-							<generateApiDocumentation>true</generateApiDocumentation>
-							<generateModelDocumentation>true</generateModelDocumentation>
-							<generateApiTests>true</generateApiTests>
-							<generateModelTests>true</generateModelTests>
-							<configOptions>
-								<useJakartaEe>true</useJakartaEe>
-								<useBeanValidation>true</useBeanValidation>
-								<performBeanValidation>true</performBeanValidation>
-								<serializableModel>true</serializableModel>
-								<generateClientAsBean>true</generateClientAsBean>
-								<generateBuilders>false</generateBuilders>
-								<dateLibrary>java8</dateLibrary>
-								<annotationLibrary>swagger2</annotationLibrary>
-								<failOnUnknownProperties>false</failOnUnknownProperties>
-							</configOptions>
 						</configuration>
 					</execution>
 				</executions>
@@ -141,4 +101,54 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>generate-openapi</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.openapitools</groupId>
+						<artifactId>openapi-generator-maven-plugin</artifactId>
+						<version>7.9.0</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+								<configuration>
+									<!--
+							https://openapi-generator.tech/docs/generators/java -->
+									<inputSpec>
+										${project.basedir}/src/main/resources/model/openapi.yaml
+									</inputSpec>
+									<generatorName>java</generatorName>
+									<library>resttemplate</library>
+									<output>${project.basedir}/gen/openapi/</output>
+
+									<apiPackage>com.omdbapi.openapi.client.api</apiPackage>
+									<modelPackage>
+										com.omdbapi.openapi.client.model</modelPackage>
+									<generateApiDocumentation>true</generateApiDocumentation>
+									<generateModelDocumentation>true</generateModelDocumentation>
+									<generateApiTests>true</generateApiTests>
+									<generateModelTests>true</generateModelTests>
+									<configOptions>
+										<useJakartaEe>true</useJakartaEe>
+										<useBeanValidation>true</useBeanValidation>
+										<performBeanValidation>true</performBeanValidation>
+										<serializableModel>true</serializableModel>
+										<generateClientAsBean>true</generateClientAsBean>
+										<generateBuilders>false</generateBuilders>
+										<dateLibrary>java8</dateLibrary>
+										<annotationLibrary>swagger2</annotationLibrary>
+										<failOnUnknownProperties>false</failOnUnknownProperties>
+									</configOptions>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
