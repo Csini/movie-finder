@@ -9,7 +9,7 @@ info:
       Movie Finder Co.
 
 servers:
-  - url: http://localhost:8080/movies
+  - url: http://localhost:8080/movies/v1
     description: Local environment (mainly for development)
 
 
@@ -18,21 +18,38 @@ tags:
     description: Provides Movie Finder endpoints
 
 paths:
-  /{movieName}:
+  /api/omdb:
     get:
-      summary: Search for a Movie.
+      summary: Search for a Movie at omdb.
       tags: 
         - movie
-      operationId: searchByMovieName
+      operationId: searchOmdbByMovieName
       parameters:
         - in: query
-          name: apiName
+          name: movieName
           schema:
             type: string
-            enum: [omdb, themovie]
           required: true
-          description: in wich database it schould search
-        - in: path
+          description: name of a movie
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /api/themoviedb:
+    get:
+      summary: Search for a Movie at themoviedb.
+      tags: 
+        - movie
+      operationId: searchTheMoviedbByMovieName
+      parameters:
+        - in: query
           name: movieName
           schema:
             type: string
@@ -81,9 +98,6 @@ components:
           type: array
     Error:
       description: Error object
-      example:
-        message: message
-        timestamp: timestamp
       properties:
         message:
           description: Error message
