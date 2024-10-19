@@ -68,6 +68,7 @@ public class ApiDeledateController implements ApiApiDelegate {
 			titleSearch.getListSearchResponse()
 					.forEach(searchResponse -> handleSearchResponse(response, searchResponse));
 		}
+		response.setSize((long)response.getMovies().size());
 		return response;
 	}
 
@@ -145,6 +146,8 @@ public class ApiDeledateController implements ApiApiDelegate {
 
 			return Movie.builder().title(result.getTitle()).year(releaseDate).director(directors).build();
 		}).forEach(moviesItem -> response.addMoviesItem(moviesItem));
+		
+		response.setSize((long)response.getMovies().size());
 		return response;
 	}
 
