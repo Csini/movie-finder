@@ -70,24 +70,24 @@ public class ApiDeledateController implements ApiApiDelegate {
 
 		callSearchMovieService.save(CallSearchMovie.themoviedb().movieTitle(movieTitle).build());
 
-		// TODO call MovieService
-		defaultApi.authenticationValidateKey();
+		//extra check from api-key
+//		defaultApi.authenticationValidateKey();
 
+		//call MovieService
 		MovieResponse response = new MovieResponse();
 
 		boolean includeAdult = true;
 		SearchMovie200Response searchMovieResult = defaultApi.searchMovie(movieTitle, includeAdult, null, null, null,
 				null, null);
 
-		for (SearchMovie200ResponseResultsInner result : searchMovieResult.getResults()) {
+		searchMovieResult.getResults().stream().map((SearchMovie200ResponseResultsInner result) -> {
 
+			Movie moviesItem = new Movie();
+			
 			MovieDetails200Response movieDetails = defaultApi.movieDetails(result.getId(), null, null);
 
 			// year
 			String releaseDate = movieDetails.getReleaseDate();
-
-			Movie moviesItem = new Movie();
-			response.addMoviesItem(moviesItem);
 
 			moviesItem.setTitle(movieDetails.getTitle());
 
@@ -113,14 +113,28 @@ public class ApiDeledateController implements ApiApiDelegate {
 //			      "department": "Visual Effects",
 //			      "job": "Animation Supervisor"
 //			    },
+//			 {
+//			      "adult": false,
+//			      "gender": 2,
+//			      "id": 7467,
+//			      "known_for_department": "Directing",
+//			      "name": "David Fincher",
+//			      "original_name": "David Fincher",
+//			      "popularity": 18.371,
+//			      "profile_path": "/tpEczFclQZeKAiCeKZZ0adRvtfz.jpg",
+//			      "credit_id": "631f0289568463007bbe28a5",
+//			      "department": "Directing",
+//			      "job": "Director"
+//			    },
 
 			// directors
 			List<String> directors = movieCredits.getCrew().stream()
-					.filter(crew -> "Directing".equals(crew.getKnownForDepartment())).map(crew -> crew.getName())
-					// .collect( Collectors.joining( ", " ) );
+					.filter(crew -> "Director".equals(crew.getJob())).map(crew -> crew.getName())
 					.collect(Collectors.toList());
 			moviesItem.setDirector(directors);
-		}
+
+			return moviesItem;
+		}).forEach(moviesItem -> response.addMoviesItem(moviesItem));
 
 //		return ApiApiDelegate.super.searchTheMoviedb(movieTitle);
 		return ResponseEntity.ok(response);
