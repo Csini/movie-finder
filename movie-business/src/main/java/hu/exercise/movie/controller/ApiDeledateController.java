@@ -97,10 +97,12 @@ public class ApiDeledateController implements ApiApiDelegate {
 
 		searchMovieResult.getResults().stream().map((SearchMovie200ResponseResultsInner result) -> {
 
-			MovieDetails200Response movieDetails = callMovieDetails(result.getId());
-
+			//not needed
+//			MovieDetails200Response movieDetails = callMovieDetails(result.getId());
+			
 			// year
-			String releaseDate = movieDetails.getReleaseDate();
+//			String releaseDate = movieDetails.getReleaseDate();
+			String releaseDate =result.getReleaseDate();
 
 			// format to year
 			// "release_date": "1999-10-15",
@@ -141,7 +143,7 @@ public class ApiDeledateController implements ApiApiDelegate {
 			List<String> directors = movieCredits.getCrew().stream().filter(crew -> "Director".equals(crew.getJob()))
 					.map(crew -> crew.getName()).collect(Collectors.toList());
 
-			return Movie.builder().title(movieDetails.getTitle()).year(releaseDate).director(directors).build();
+			return Movie.builder().title(result.getTitle()).year(releaseDate).director(directors).build();
 		}).forEach(moviesItem -> response.addMoviesItem(moviesItem));
 		return response;
 	}

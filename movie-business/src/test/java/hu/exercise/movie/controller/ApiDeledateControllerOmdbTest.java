@@ -26,9 +26,9 @@ public class ApiDeledateControllerOmdbTest extends ApiDeledateController {
 		Assertions.assertEquals(1, output.getMovies().size());
 
 		Movie movie = output.getMovies().get(0);
-		Assertions.assertEquals(input.getSearchResponse().getTitle(), movie.getTitle());
-		Assertions.assertEquals(input.getSearchResponse().getDirector(), movie.getDirector().get(0));
-		Assertions.assertEquals(input.getSearchResponse().getYear(), movie.getYear());
+		Assertions.assertEquals(input.getTitle(), movie.getTitle());
+		Assertions.assertEquals(input.getDirector(), movie.getDirector().get(0));
+		Assertions.assertEquals(input.getYear(), movie.getYear());
 	}
 	
 	@Test
@@ -51,14 +51,14 @@ public class ApiDeledateControllerOmdbTest extends ApiDeledateController {
 		Assertions.assertEquals(2, output.getMovies().size());
 
 		Movie movie1 = output.getMovies().get(0);
-		Assertions.assertEquals(input1.getSearchResponse().getTitle(), movie1.getTitle());
-		Assertions.assertEquals(input1.getSearchResponse().getDirector(), movie1.getDirector().get(0));
-		Assertions.assertEquals(input1.getSearchResponse().getYear(), movie1.getYear());
+		Assertions.assertEquals(input1.getTitle(), movie1.getTitle());
+		Assertions.assertEquals(input1.getDirector(), movie1.getDirector().get(0));
+		Assertions.assertEquals(input1.getYear(), movie1.getYear());
 		
 		Movie movie2 = output.getMovies().get(1);
-		Assertions.assertEquals(input2.getSearchResponse().getTitle(), movie2.getTitle());
-		Assertions.assertEquals(input2.getSearchResponse().getDirector(), movie2.getDirector().get(0));
-		Assertions.assertEquals(input2.getSearchResponse().getYear(), movie2.getYear());
+		Assertions.assertEquals(input2.getTitle(), movie2.getTitle());
+		Assertions.assertEquals(input2.getDirector(), movie2.getDirector().get(0));
+		Assertions.assertEquals(input2.getYear(), movie2.getYear());
 	}
 
 }
