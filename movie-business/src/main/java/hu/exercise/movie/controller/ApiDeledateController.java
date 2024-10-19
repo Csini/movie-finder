@@ -30,20 +30,20 @@ public class ApiDeledateController implements ApiApiDelegate {
 	}
 
 	@Override
-	public ResponseEntity<MovieResponse> searchOmdbByMovieName(String movieName) {
+	public ResponseEntity<MovieResponse> searchOmdb(String movieTitle) {
 		
-		callSearchMovieService.save(CallSearchMovie.omdb().movieTitle(movieName).build());
+		callSearchMovieService.save(CallSearchMovie.omdb().movieTitle(movieTitle).build());
 		
 		// TODO call MovieService
-		return ApiApiDelegate.super.searchOmdbByMovieName(movieName);
+		return ApiApiDelegate.super.searchOmdb(movieTitle);
 	}
 	
 	@Override
-	public ResponseEntity<MovieResponse> searchTheMoviedbByMovieName(String movieName) {
+	public ResponseEntity<MovieResponse> searchTheMoviedb(String movieTitle) {
 		
-		callSearchMovieService.save(CallSearchMovie.themoviedb().movieTitle(movieName).build());
+		callSearchMovieService.save(CallSearchMovie.themoviedb().movieTitle(movieTitle).build());
 		
 		// TODO call MovieService
-		return ApiApiDelegate.super.searchTheMoviedbByMovieName(movieName);
+		return ApiApiDelegate.super.searchTheMoviedb(movieTitle);
 	}
 }

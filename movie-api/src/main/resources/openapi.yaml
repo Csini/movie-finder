@@ -23,14 +23,14 @@ paths:
       summary: Search for a Movie at omdb.
       tags: 
         - movie
-      operationId: searchOmdbByMovieName
+      operationId: searchOmdb
       parameters:
         - in: query
-          name: movieName
+          name: movieTitle
           schema:
             type: string
           required: true
-          description: name of a movie
+          description: title of a movie
       responses:
         200:
           description: ""
@@ -47,14 +47,14 @@ paths:
       summary: Search for a Movie at themoviedb.
       tags: 
         - movie
-      operationId: searchTheMoviedbByMovieName
+      operationId: searchTheMoviedb
       parameters:
         - in: query
-          name: movieName
+          name: movieTitle
           schema:
             type: string
           required: true
-          description: name of a movie
+          description: title of a movie
       responses:
         200:
           description: ""
