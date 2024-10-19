@@ -1,0 +1,143 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: bfritz@fadingsignal.com
+  description: "This API requires authorization, you can get a free key here: [http://omdbapi.com/apikey.aspx](http://omdbapi.com/apikey.aspx)"
+  license:
+    name: CC BY-NC 4.0
+    url: https://creativecommons.org/licenses/by-nc/4.0/
+  termsOfService: http://omdbapi.com/legal.htm
+  title: OMDb API
+  version: "1.0"
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://omdbapi.com/
+- url: https://omdbapi.com/
+security:
+- ApiKeyAuth: []
+tags:
+- description: e.g. ?t=title
+  name: Title Parameter
+- description: e.g. ?i=tt0000001
+  name: ID Parameter
+- description: e.g. ?s=title
+  name: Search Parameter
+paths:
+  /:
+    get:
+      operationId: titleSearch
+      parameters:
+      - description: Title of movie or series
+        explode: true
+        in: query
+        name: s
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Year of release
+        explode: true
+        in: query
+        name: "y"
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Return movie or series
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          enum:
+          - movie
+          - series
+          type: string
+        style: form
+      - description: The response type to return
+        explode: true
+        in: query
+        name: r
+        required: false
+        schema:
+          enum:
+          - json
+          - xml
+          type: string
+        style: form
+      - description: Page number to return
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: JSONP callback name
+        explode: true
+        in: query
+        name: callback
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/titleSearch_200_response'
+          description: ""
+        "401":
+          content: {}
+          description: Not authenticated
+      summary: Returns an array of results for a given title
+      tags:
+      - Search Parameter
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    SearchResponse:
+      description: Type SearchResponse
+      example:
+        Response: true
+        Year: "1967"
+        Director: John Doe
+        Title: Countdown
+      properties:
+        Title:
+          example: Countdown
+          type: string
+        Year:
+          example: "1967"
+          type: string
+        Director:
+          example: John Doe
+          type: string
+        Response:
+          example: true
+          type: boolean
+      required:
+      - Director
+      - Title
+      - Year
+      type: object
+    SearchResponses:
+      description: Type SearchResponses
+      items:
+        $ref: '#/components/schemas/SearchResponse'
+      type: array
+    titleSearch_200_response:
+      oneOf:
+      - $ref: '#/components/schemas/SearchResponse'
+      - $ref: '#/components/schemas/SearchResponses'
+  securitySchemes:
+    ApiKeyAuth:
+      in: query
+      name: apikey
+      type: apiKey
+x-original-swagger-version: "2.0"
+

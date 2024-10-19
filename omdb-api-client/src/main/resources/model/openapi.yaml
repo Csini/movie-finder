@@ -112,18 +112,5 @@ components:
       type: array
       items:
         type: object
-        required: [Title, Year, Director]
-        properties:
-          Title:
-            type: string
-            example: Countdown
-          Year:
-            type: string
-            example: "1967"
-          Director:
-            type: string
-            example: "John Doe"
-          Response:
-            example: "True"
-            type: boolean
+        $ref: '#/components/schemas/SearchResponse'
 x-original-swagger-version: '2.0'
