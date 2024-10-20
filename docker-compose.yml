@@ -25,9 +25,11 @@ services:
       SPRING_DATA_REDIS_HOST: cache
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_PASSWORD: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CACHE_INTERCEPTOR: TRACE
+      LOGGING_LEVEL_ORG_HIBERNATE_SQL: DEBUG
+      LOGGING_LEVEL_ORG_APACHE_HC_CLIENT5_HTTP_WIRE: TRACE
     volumes:
       - ./logs:/logs
-      - .m2:/root/.m2
     networks:
       - mynetwork
   db:

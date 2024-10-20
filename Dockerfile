@@ -12,7 +12,9 @@ COPY omdb-api-client/pom.xml ./omdb-api-client/pom.xml
 COPY tmdb-api-client/src ./tmdb-api-client/src
 COPY tmdb-api-client/pom.xml ./tmdb-api-client/pom.xml
 
-RUN mvn clean package -DskipTests
+RUN mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
+RUN mvn clean package -q
+# RUN rm -rf /root/.m2
 
 
 # Stage 2: Run the application
