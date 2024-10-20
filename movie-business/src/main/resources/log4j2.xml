@@ -31,7 +31,7 @@
         </Root>
 
         <!-- LOG "hu.exercise*" at DEBUG level -->
-        <Logger name="hu.exercise" level="debug"></Logger>
+        <Logger name="hu.exercise" level="info"></Logger>
         
     </Loggers>
 
