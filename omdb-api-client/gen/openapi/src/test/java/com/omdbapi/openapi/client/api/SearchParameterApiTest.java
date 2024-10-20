@@ -54,7 +54,7 @@ class SearchParameterApiTest {
         Integer page = null;
         String paramCallback = null;
 
-        TitleSearch200Response response = api.titleSearch(s, y, type, r, page, paramCallback);
+        Object response = api.titleSearch(s, y, type, r, page, paramCallback);
 
         // TODO: test validations
     }

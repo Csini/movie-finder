@@ -56,7 +56,7 @@ public class SearchParameterApi extends BaseApi {
      * @return TitleSearch200Response
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TitleSearch200Response titleSearch(String s, Integer y, String type, String r, Integer page, String paramCallback) throws RestClientException {
+    public Object titleSearch(String s, Integer y, String type, String r, Integer page, String paramCallback) throws RestClientException {
         return titleSearchWithHttpInfo(s, y, type, r, page, paramCallback).getBody();
     }
 
@@ -74,7 +74,7 @@ public class SearchParameterApi extends BaseApi {
      * @return ResponseEntity&lt;TitleSearch200Response&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TitleSearch200Response> titleSearchWithHttpInfo(String s, Integer y, String type, String r, Integer page, String paramCallback) throws RestClientException {
+    public ResponseEntity<Object> titleSearchWithHttpInfo(String s, Integer y, String type, String r, Integer page, String paramCallback) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 's' is set
@@ -105,7 +105,7 @@ public class SearchParameterApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
 
-        ParameterizedTypeReference<TitleSearch200Response> localReturnType = new ParameterizedTypeReference<TitleSearch200Response>() {};
+        ParameterizedTypeReference<Object> localReturnType = new ParameterizedTypeReference<>() {};
         return apiClient.invokeAPI("/", HttpMethod.GET, Collections.<String, Object>emptyMap(), localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
 

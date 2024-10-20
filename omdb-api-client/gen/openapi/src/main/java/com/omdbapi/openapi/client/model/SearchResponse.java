@@ -38,7 +38,8 @@ import org.hibernate.validator.constraints.*;
   SearchResponse.JSON_PROPERTY_DIRECTOR,
   SearchResponse.JSON_PROPERTY_RESPONSE
 })
-public class SearchResponse extends TitleSearch200Response implements Serializable {
+//@JsonTypeName("searchRespons_200_response")
+public class SearchResponse implements Serializable {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TITLE = "Title";

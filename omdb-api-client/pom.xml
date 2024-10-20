@@ -50,6 +50,18 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
 		</dependency>
+
+		<!-- test scoped -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -81,7 +93,7 @@
 							<sources>
 								<source>
 									target/generated-sources/openapi/src/test/java/</source>
-								<source>gen/openapi/src/main/test</source>
+								<source>gen/openapi/src/test/java</source>
 							</sources>
 						</configuration>
 					</execution>

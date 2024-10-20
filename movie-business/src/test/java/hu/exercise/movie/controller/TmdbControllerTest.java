@@ -11,7 +11,7 @@ import org.themoviedb.openapi.client.model.SearchMovie200ResponseResultsInner;
 import hu.exercise.movie.openapi.model.Movie;
 import hu.exercise.movie.openapi.model.MovieResponse;
 
-public class ApiDeledateControllerTmdbTest extends ApiDeledateController {
+public class TmdbControllerTest extends TmdbController {
 
 	@Test
 	public void test_handleSearchMovie200Response() {
